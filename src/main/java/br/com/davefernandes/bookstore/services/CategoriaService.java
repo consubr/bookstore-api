@@ -40,4 +40,12 @@ public class CategoriaService {
 		obj.setId(id);
 		return repository.save(obj);
 	}
+
+	public void delete(Integer id) {
+		// se existe traz, se não dispara erro 404
+		findById(id);	
+		
+		// se chegou aqui é pq existe, então pode deletar se medo
+		repository.deleteById(id);
+	}
 }
