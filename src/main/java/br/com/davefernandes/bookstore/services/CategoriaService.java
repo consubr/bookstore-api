@@ -22,14 +22,22 @@ public class CategoriaService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto Não Encontrado! Id: " + id + ", Tipo: " + Categoria.class.getSimpleName()));
 	}
-	
-	public List<Categoria> findAll(){
-		return repository.findAll();		
-	}
-	
-	public Categoria create(Categoria obj){
-		obj.setId(null);
-		return repository.save(obj);		
+
+	public List<Categoria> findAll() {
+		return repository.findAll();
 	}
 
+	public Categoria create(Categoria obj) {
+		obj.setId(null);
+		return repository.save(obj);
+	}
+
+	public Categoria update(Integer id, Categoria obj) {
+		// se existe traz, se não dispara erro 404
+		findById(id);
+
+		// se chegou aqui é pq existe
+		obj.setId(id);
+		return repository.save(obj);
+	}
 }

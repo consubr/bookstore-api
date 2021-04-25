@@ -258,3 +258,6 @@ Caused by: java.nio.channels.OverlappingFileLockException
 	at java.base/java.nio.channels.FileChannel.tryLock(FileChannel.java:1165)
 	at org.h2.mvstore.FileStore.open(FileStore.java:163)
 	... 28 more
+2021-04-25 10:28:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CATEGORIA" not found; SQL statement:
+insert into categoria (id, descricao, nome) values (null, ?, ?) [42102-200]
