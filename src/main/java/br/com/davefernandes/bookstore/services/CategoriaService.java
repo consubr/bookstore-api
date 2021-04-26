@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.davefernandes.bookstore.domain.Categoria;
@@ -43,9 +44,13 @@ public class CategoriaService {
 
 	public void delete(Integer id) {
 		// se existe traz, se não dispara erro 404
-		findById(id);	
-		
-		// se chegou aqui é pq existe, então pode deletar se medo
-		repository.deleteById(id);
+		findById(id);
+
+		try {
+			repository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new br.com.davefernandes.bookstore.services.exceptions.DataIntegrityViolationException(
+					"Categoria não pode ser Deletada!, pois possui livros associados");
+		}
 	}
 }
