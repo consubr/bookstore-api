@@ -44,6 +44,17 @@ public class LivroService {
 		obj.setId(id);
 		return repository.save(obj);
 	}
+	
+	public Livro updatePatch(Integer id, Livro obj) {
+		// se existe traz, se não dispara erro 404
+		Livro livro = findById(id);
+
+		// se chegou aqui é pq existe
+		//update parcial
+		livro.setNome_autor(obj.getNome_autor());
+		livro.setTitulo(obj.getTitulo());
+		return repository.save(livro);
+	}
 
 	public void delete(Integer id) {
 		// se existe traz, se não dispara erro 404
