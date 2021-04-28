@@ -4,8 +4,11 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +23,7 @@ import br.com.davefernandes.bookstore.domain.Categoria;
 import br.com.davefernandes.bookstore.dtos.CategoriaDTO;
 import br.com.davefernandes.bookstore.services.CategoriaService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
@@ -43,14 +47,14 @@ public class CategoriaResource {
 	
 	//Crio a Categoria com o status created e trago o link para busca no body
 	@PostMapping()
-	public ResponseEntity<Categoria> create(@RequestBody Categoria obj){
+	public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria obj){
 		obj = service.create(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Categoria> update(@PathVariable Integer id, @RequestBody Categoria obj){
+	public ResponseEntity<Categoria> update(@PathVariable Integer id, @Valid @RequestBody Categoria obj){
 		Categoria newObj = service.update(id, obj);		
 		return ResponseEntity.ok().body(newObj);
 	}
