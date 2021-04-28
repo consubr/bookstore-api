@@ -52,10 +52,10 @@ public class LivroResource {
 	}
 	
 	//Crio a Livro com o status created e trago o link para busca no body
-	@PostMapping()
-	public ResponseEntity<Livro> create(@RequestBody Livro obj){
-		obj = service.create(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+	@PostMapping(value = "/p")
+	public ResponseEntity<Livro> create(@RequestParam(value = "categoria", defaultValue = "0") Integer id_cat, @RequestBody Livro obj){
+		obj = service.create(id_cat, obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("livros/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
 	

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import br.com.davefernandes.bookstore.domain.Categoria;
 import br.com.davefernandes.bookstore.domain.Livro;
 import br.com.davefernandes.bookstore.repositories.LivroRepository;
 import br.com.davefernandes.bookstore.services.exceptions.ObjectNotFoundException;
@@ -31,8 +32,12 @@ public class LivroService {
 		return repository.findAll();
 	}
 
-	public Livro create(Livro obj) {
+	public Livro create(Integer id_cat, Livro obj) {
+		//se não achar dispara erro 404
+		Categoria objFinded  = categoriaService.findById(id_cat);
+
 		obj.setId(null);
+		obj.setCategoria(objFinded);
 		return repository.save(obj);
 	}
 
