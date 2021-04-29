@@ -3,6 +3,7 @@ package br.com.davefernandes.bookstore.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class LivroService {
 	
 	@Autowired
 	private CategoriaService categoriaService;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	public Livro findById(Integer id) {
 		Optional<Livro> obj = repository.findById(id);
@@ -55,10 +59,9 @@ public class LivroService {
 		Livro livro = findById(id);
 
 		// se chegou aqui é pq existe
-		//update parcial
-		livro.setNome_autor(obj.getNome_autor());
-		livro.setTitulo(obj.getTitulo());
-		return repository.save(livro);
+		//update parcial		
+		obj.setId(id);
+		return repository.save(modelMapper.map(obj, Livro.class));
 	}
 
 	public void delete(Integer id) {
