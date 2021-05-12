@@ -1,12 +1,16 @@
 package br.com.davefernandes.bookstore.dtos;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
 import br.com.davefernandes.bookstore.domain.Livro;
 
-public class LivroDTO {
+public class LivroDTO implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
 	
